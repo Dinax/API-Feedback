@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpSession;
  */
 
 public class PageFilter implements Filter {
+        
     
      public void destroy() {
          // TODO Auto-generated method stub
@@ -31,26 +33,41 @@ public class PageFilter implements Filter {
    
          //Recupera a Sessão atual ou a cria uma nova caso não exista.
          HttpSession sess = ((HttpServletRequest) request).getSession(true);
+         
    
          //Usamos o objeto request para capturar a sessão como um HttpSession. 
          //Depois capturamos a página atual que está sendo acessada
          String newCurrentPage = ((HttpServletRequest) request).getServletPath();
-   
+         
+         //Usamos o objeto request para capturar o ip como um HttpSession. 
+         //Depois capturamos o ip atual do cliente que está acessando a pagina
+         String ipCurrent = ((HttpServletRequest) request).getRemoteAddr();
+         
+         System.out.println("Sessão criada ou recuperada: " + sess.getId());
+         System.out.println("\nPagina acessada: " + newCurrentPage);
+         System.out.println("\nIp do cliente " + ipCurrent);
+         System.out.println("\nToken " + ((HttpServletRequest) request).getSession().getAttribute("token"));
+            
          //Logo em seguida verificamos se não existe uma página atual gravada na sessão, 
          //caso isso seja verdade então sabemos que é o primeiro acesso do usuário.
          //Neste caso iremos gravar a última página e a página atual como sendo as mesmas:
          if (sess.getAttribute("currentPage") == null) {
              sess.setAttribute("lastPage", newCurrentPage);
-             sess.setAttribute("currentPage", newCurrentPage);
+             sess.setAttribute("currentPage", newCurrentPage);              
+             RequestDispatcher dispatcher = request.getRequestDispatcher("Login.html");
+             dispatcher.forward(request, response);
          } else {
    
-             String oldCurrentPage = sess.getAttribute("currentPage").toString();
+             String oldCurrentPage = sess.getAttribute("currentPage").toString();             
+             
              if (!oldCurrentPage.equals(newCurrentPage)) {
                sess.setAttribute("lastPage", oldCurrentPage);
-               sess.setAttribute("currentPage", newCurrentPage);
+               sess.setAttribute("currentPage", newCurrentPage);              
              }
          }
-   
+              
+        
+                
          //O usuário prossiga com o seu fluxo de navegação:
          chain.doFilter(request, response);   
       }

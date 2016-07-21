@@ -18,17 +18,20 @@
         
         var signature = CryptoJS.HmacSHA256(base64Header + "." + base64Payload, txtSecret.value); 
         var base64Sign = CryptoJS.enc.Base64.stringify(signature);       
-        var jwt = (base64Header + "." + base64Payload + "." + base64Sign);  
+        var jwt = (base64Header + "." + base64Payload + "." + base64Sign);          
+      
         
         $.ajax({
           type: 'post',
           data: jwt,
-          url:'<%=request.getContextPath()%>/Auth',
+          url:'../Auth',
            success: function(retorno){               
-                document.getElementById("txtResult").innerHTML = retorno;             
+                document.getElementById("txtResult").innerHTML = retorno; 
+                alert("Sucesso: " + retorno);
             }              
             ,error: function(retorno){                             
-                document.getElementById("txtResult").innerHTML = retorno;
+               document.getElementById("txtResult").innerHTML = retorno;
+                alert("Erro: " + retorno);
           } 
         });
         }

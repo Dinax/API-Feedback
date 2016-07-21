@@ -19,6 +19,8 @@ public class SessionListener implements HttpSessionListener {
 
      public void sessionCreated(HttpSessionEvent event) {        
            System.out.println("Sessão criada " + event.getSession().getId());
+           System.out.println(" " + event.getSession());
+           
       }
    
       public void sessionDestroyed(HttpSessionEvent event) {     

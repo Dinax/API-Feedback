@@ -34,8 +34,7 @@
                     "login": document.getElementById("txtUser").value                   
                 };                
                         
-            var payloadText = JSON.stringify(payload, null, 2);
-            alert(payloadText);   
+            var payloadText = JSON.stringify(payload, null, 2);             
             return payloadText;           
         }
         

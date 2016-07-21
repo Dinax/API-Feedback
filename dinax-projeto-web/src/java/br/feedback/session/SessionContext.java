@@ -12,21 +12,23 @@ import javax.faces.context.FacesContext;
  */
 public class SessionContext {
 
-    private static SessionContext instance;
+    private static SessionContext instance;    
+   
 
     //Verifica se contem nenhuma sessão e a cria
     public static SessionContext getInstance() {
         if (instance == null) {
             instance = new SessionContext();
+           
         }
 
         return instance;
     }
 
-    private SessionContext() {
+    private SessionContext() {        
 
     }
-    
+ 
 
     //ExternalContext trabalha com HTTP servlet, HTTP request e etc.
     private ExternalContext currentExternalContext() {

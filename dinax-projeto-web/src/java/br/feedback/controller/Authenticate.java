@@ -8,13 +8,10 @@ package br.feedback.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author Dinax
@@ -32,14 +29,14 @@ public class Authenticate extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException  {
+       
        //Recupera o JSON data da request
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
-        String json = "";
-        JOptionPane.showMessageDialog(null, request);
+        String json = "";       
         if(br != null){
             json = br.readLine();
-        }
-        
+        }     
+                
         response.setContentType("text/plain");
         response.getWriter().write(json);
     
